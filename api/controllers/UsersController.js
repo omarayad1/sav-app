@@ -56,13 +56,14 @@ module.exports = {
 			else if (req.body.token != found.token) console.log("Wrong Token");
 			else {
 				client.set(found.token,found.id);
-				client.expireat(found.token,86400)
+				client.expire(found.token,86400)
 				res.json({"session": found.token});
 			}
 		});
 	},
 	isAuthenticatedApi: function(req,res){
 		client.get(req.query.token, function(err, value){
+			console.log(value);
 			if (err) res.json({err: err});
 			else if (value===null) res.json({err: "Not authenticated"});
 			else res.json({session: value});
