@@ -37,9 +37,6 @@ module.exports.policies = {
   UsersController: {
     renderToken: 'sessionAuth',
     generateToken: 'sessionAuth'
-  },
-  TasksController: {
-    pushJob: 'sessionAuthAPI'
   }
   // RabbitController: {
 

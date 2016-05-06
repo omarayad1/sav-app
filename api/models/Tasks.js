@@ -6,10 +6,9 @@
  */
 
 module.exports = {
-
   attributes: {
     file: {
-      type: "string",
+      type: "array",
       required: true
     },
     name: {
