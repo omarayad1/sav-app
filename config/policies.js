@@ -34,7 +34,14 @@ module.exports.policies = {
   * and its actions                                                          *
   *                                                                          *
   ***************************************************************************/
-	// RabbitController: {
+  UsersController: {
+    renderToken: 'sessionAuth',
+    generateToken: 'sessionAuth'
+  },
+  TasksController: {
+    pushJob: 'sessionAuthAPI'
+  }
+  // RabbitController: {
 
 		// Apply the `false` policy as the default for all of RabbitController's actions
 		// (`false` prevents all access, which ensures that nothing bad happens to our rabbits)

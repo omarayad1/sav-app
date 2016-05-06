@@ -11,20 +11,17 @@ client = redis.createClient();
 
 module.exports = {
 	renderLogin: function(req,res){
-		console.log(req.session.name);
 		res.view('login');
 	},
 	renderSignup: function(req,res){
 		res.view('signup');
 	},
 	renderToken: function(req,res){
-		if (!req.session.authenticated) return res.redirect('/');
 		Users.getToken(req.session.token, function(err,token){
 			return res.view('token',{token: token});
 		});
 	},
 	generateToken: function(req,res){
-		if (!req.session.authenticated) return res.redirect('/');
 		Users.updateToken(req.session.token, function(err,token){
 			return res.redirect('/token');
 		});
