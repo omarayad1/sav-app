@@ -24,6 +24,7 @@ module.exports = {
 	},
 	generateToken: function(req,res){
 		Users.updateToken(req.session.token, function(err,token){
+			if (err) console.log(err);
 			return res.redirect('/token');
 		});
 	},
@@ -51,11 +52,11 @@ module.exports = {
 		Users.login(req.body, function(err,found){
 			if (err === 1) console.log(err);
 			else if (err) console.log(err);
-			else if (req.body.token != found.token) console.log("Wrong Token");
+			else if (req.body.token != found.tokenAPI) console.log("Wrong Token");
 			else {
-				client.set(found.token,found.id);
-				client.expire(found.token,86400)
-				res.json({"session": found.token});
+				client.set(found.tokenAPI,found.id);
+				client.expire(found.tokenAPI,86400)
+				res.json({"session": found.tokenAPI});
 			}
 		});
 	},

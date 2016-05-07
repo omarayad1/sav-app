@@ -44,7 +44,8 @@ module.exports.routes = {
   'post /api/v1/login': 'UsersController.authenticateApi',
   'get /api/v1/isauthenticated': 'UsersController.isAuthenticatedApi',
   'post /api/v1/pushjob': 'TasksController.pushJob',
-  'get /api/v1/jobinfo': 'TasksController.getJobStatus'
+  'get /api/v1/jobinfo': 'TasksController.getJobStatus',
+  'get /api/v1/results': 'ResultsController.getResults'
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

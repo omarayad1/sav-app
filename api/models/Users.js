@@ -35,7 +35,12 @@ module.exports = {
   },
   signup: function(data, callback) {
     var salt = bcrypt.genSaltSync(10);
-    Users.create({name: data.name, email: data.email, salt: salt, password: bcrypt.hashSync(data.password, salt)}).exec(function(err,created){
+    Users.create({
+      name: data.name,
+      email: data.email,
+      salt: salt,
+      password: bcrypt.hashSync(data.password, salt)
+    }).exec(function(err,created){
       callback(err,created)
     });
   },
@@ -50,17 +55,15 @@ module.exports = {
   },
   getToken: function(data,callback) {
     Users.findOne(data).exec(function(err,found){
-      if (!found.hasOwnProperty("token")) callback(err,undefined);
-      else callback(err,found.token);
+      if (!found.hasOwnProperty("tokenAPI")) callback(err,undefined);
+      else callback(err,found.tokenAPI);
     });
   },
   updateToken: function(data,callback){
     require('crypto').randomBytes(24, function(err, buffer) {
-  var token = buffer.toString('hex');
+    var token = buffer.toString('hex');
 
-
-    Users.update(data, {token: token}).exec(function(err,found){
-      console.log(found);
+    Users.update(data, {tokenAPI: token}).exec(function(err,found){
       callback(err,found.token)
     })
   });
