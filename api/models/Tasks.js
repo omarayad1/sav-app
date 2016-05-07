@@ -26,6 +26,15 @@ module.exports = {
     status: {
       type: "string",
       required: true
+    },
+    dataKeyFrames: {
+      type: "array"
+    },
+    dataClassify: {
+      type: "array",
+    },
+    dataFinal: {
+      type: "json",
     }
   }
 };

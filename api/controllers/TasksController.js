@@ -34,8 +34,7 @@ module.exports = {
 									else {
                     amqp.connect('amqp://localhost', function(err, conn) {
                       conn.createChannel(function(err,ch){
-                        if (type === 'image') var q = "classify";
-                        else var q = "extract";
+                        var q = "initialization";
                         ch.assertQueue(q, {durable: true});
                         ch.sendToQueue(q, new Buffer(created.id.toString()));
                         res.json({'status': created.status, 'type': created.type, 'id': created.id});
@@ -52,7 +51,7 @@ module.exports = {
 	},
   getJobStatus: function(req,res){
     clientRedis.get(req.query.token, function(err,value){
-      Tasks.findOne({userId: value, id: req.query.id}, function(err,found){
+      Tasks.findOne({userId: value, id: req.query.id}).exec(function(err,found){
         if (err) res.json({err: err});
         else if (found === null) res.json({err: "Job doesn't exists"});
         else res.json({'status': found.status, 'type': found.type, 'id': found.id})
@@ -61,9 +60,9 @@ module.exports = {
   },
   getAllJobs: function(req,res){
     clientRedis.get(req.query.token, function(err,value){
-      Tasks.find({userId: value}, function(err,found){
+      Tasks.find({userId: value}).exec(function(err,found){
         if (err) res.json({err: err});
-        else if (found.length === 0) res.json({err: "Job doesn't exists"});
+        else if (found.length === 0) res.json({err: "no jobs found"});
         else res.json(found);
       });
     });
