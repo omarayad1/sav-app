@@ -70,7 +70,15 @@ module.exports = {
 	renderJobs: function(req,res){
 		if(!req.session.authenticated) return res.redirect('/');
 		Tasks.find({userId: req.session.token}).exec(function(err,found){
-			res.view('jobs', {data: found});
+			if(err) console.log(err);
+			else res.view('jobs', {data: found});
+		});
+	},
+	renderJob: function(req,res){
+		if(!req.session.authenticated) return res.redirect('/');
+		Tasks.findOne({userId: req.session.token, id: req.param('id')}).exec(function(err,found){
+			if(err) console.log(err);
+			else res.view('job', {data: found});
 		});
 	}
 };
