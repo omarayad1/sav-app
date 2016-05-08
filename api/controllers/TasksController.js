@@ -54,7 +54,7 @@ module.exports = {
       Tasks.findOne({userId: value, id: req.query.id}).exec(function(err,found){
         if (err) res.json({err: err});
         else if (found === null) res.json({err: "Job doesn't exists"});
-        else res.json({'status': found.status, 'type': found.type, 'id': found.id})
+        else res.json(found);
       });
     });
   },

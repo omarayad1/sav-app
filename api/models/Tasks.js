@@ -31,10 +31,10 @@ module.exports = {
       type: "array"
     },
     dataClassify: {
-      type: "array",
-    },
-    dataFinal: {
       type: "json",
+    },
+    timeList: {
+      type: "array"
     }
   }
 };
