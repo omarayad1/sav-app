@@ -43,6 +43,7 @@
         <ul class="nav navbar-nav">
           <% if (req.session.authenticated) { %>
             <li><a href="/token">Generate Token</a></li>
+            <li><a href="/jobs">Jobs</a></li>
           <% } else { %>
             <li><a href="/login">Login</a></li>
             <li><a href="/signup">Sign Up</a></li>

@@ -66,5 +66,11 @@ module.exports = {
         else res.json(found);
       });
     });
-  }
+  },
+	renderJobs: function(req,res){
+		if(!req.session.authenticated) return res.redirect('/');
+		Tasks.find({userId: req.session.token}).exec(function(err,found){
+			res.view('jobs', {data: found});
+		});
+	}
 };

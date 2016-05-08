@@ -11,7 +11,6 @@ client = redis.createClient();
 
 module.exports = {
 	renderLogin: function(req,res){
-		console.log(req.session.name);
 		res.view('login');
 	},
 	renderSignup: function(req,res){

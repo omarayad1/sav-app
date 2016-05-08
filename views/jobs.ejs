@@ -1,0 +1,8 @@
+<div class="container">
+<h1>Jobs</h1>
+<ul class="list-group">
+  <% for (var i=0; i<data.length; i++) { %>
+    <a href="/job/<%= data[i].id %>" class="list-group-item <% if (data[i].status.indexOf('check results')) { %>list-group-item-success <% } else { %>list-group-item-warning<% } %>"><%= data[i].status %> <span class="badge pull-right"><%= data[i].id %></span></a>
+  <% } %>
+</ul>
+</div>
