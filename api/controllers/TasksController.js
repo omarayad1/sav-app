@@ -67,6 +67,26 @@ module.exports = {
       });
     });
   },
+	searchByLabel: function(req,res){
+		clientRedis.get(req.query.token, function(err,value){
+      Tasks.findOne({userId: value, id: req.query.id}).exec(function(err,found){
+        if (err) res.json({err: err});
+        else if (!found) res.json({err: "no jobs found"});
+        else {
+					var framelist = []
+					Object.keys(found.dataClassify).forEach(function(key) {
+						for (var i=0; i<found.dataClassify[key].length; i++){
+							if (found.dataClassify[key][i].indexOf(req.query.search)!=-1) framelist.push(key);
+						}
+					});
+					framelist_filtered = framelist.filter(function(elem, pos) {
+					    return framelist.indexOf(elem) == pos;
+					});
+					res.json({framelist: framelist_filtered});
+				}
+      });
+    });
+	},
 	renderJobs: function(req,res){
 		if(!req.session.authenticated) return res.redirect('/');
 		Tasks.find({userId: req.session.token}).exec(function(err,found){
@@ -80,5 +100,9 @@ module.exports = {
 			if(err) console.log(err);
 			else res.view('job', {data: found});
 		});
+	},
+	renderPushJob: function(req,res){
+		if(!req.session.authenticated) return res.redirect('/');
+		else res.view('pushjob');
 	}
 };
