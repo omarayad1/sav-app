@@ -211,3 +211,4 @@ ENV/
 # Rope project settings
 .ropeproject
 
+assets/user_data
