@@ -44,6 +44,7 @@ module.exports.routes = {
   'get /job': 'TasksController.renderJobs',
   'get /job/:id': 'TasksController.renderJob',
   'get /pushjob': 'TasksController.renderPushJob',
+  'get /job/:id/search': 'TasksController.searchByLabelView',
   'post /api/v1/login': 'UsersController.authenticateApi',
   'get /api/v1/isauthenticated': 'UsersController.isAuthenticatedApi',
   'post /api/v1/pushjob': 'TasksController.pushJob',

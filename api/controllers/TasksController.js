@@ -73,7 +73,7 @@ module.exports = {
         if (err) res.json({err: err});
         else if (!found) res.json({err: "no jobs found"});
         else {
-					var framelist = []
+					var framelist = [];
 					Object.keys(found.dataClassify).forEach(function(key) {
 						for (var i=0; i<found.dataClassify[key].length; i++){
 							if (found.dataClassify[key][i].indexOf(req.query.search)!=-1) framelist.push(key);
@@ -86,6 +86,33 @@ module.exports = {
 				}
       });
     });
+	},
+	searchByLabelView: function(req,res){
+		if(!req.session.authenticated) return res.redirect('/');
+		Tasks.findOne({userId: req.session.token, id: req.param('id')}).exec(function(err,found){
+			if (err) console.log(err);
+			else if (!found) console.log("no jobs found");
+			else {
+				var framelist = [];
+				Object.keys(found.dataClassify).forEach(function(key) {
+					for (var i=0; i<found.dataClassify[key].length; i++){
+						if (found.dataClassify[key][i].indexOf(req.query.search)!=-1) framelist.push(key);
+					}
+				});
+				framelist_filtered = framelist.filter(function(elem, pos) {
+						return framelist.indexOf(elem) == pos;
+				});
+				var timelist = []
+				var imagelist = []
+				var labels = []
+				for (var i=0; i<framelist_filtered.length; i++){
+					timelist.push(found.timeList[found.dataKeyFrames.indexOf(parseInt(framelist_filtered[i]))]);
+					imagelist.push(found.file[found.dataKeyFrames.indexOf(parseInt(framelist_filtered[i]))]);
+					labels.push(found.dataClassify[framelist_filtered[i]])
+				}
+				res.view('search', {times: timelist, imagelist: imagelist, labels: labels});
+			}
+		});
 	},
 	renderJobs: function(req,res){
 		if(!req.session.authenticated) return res.redirect('/');

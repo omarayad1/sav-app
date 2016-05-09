@@ -54,7 +54,7 @@ module.exports = {
 			else if (req.body.token != found.tokenAPI) console.log("Wrong Token");
 			else {
 				client.set(found.tokenAPI,found.id);
-				client.expire(found.tokenAPI,86400)
+				client.expire(found.tokenAPI,86400);
 				res.json({"session": found.tokenAPI});
 			}
 		});
